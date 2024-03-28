@@ -2,7 +2,7 @@ import express from 'express'
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import { getImagePathByName } from './core/picture.js'
+import { getImagePathByName } from './src/picture.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
