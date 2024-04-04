@@ -3,7 +3,7 @@ import { getImagePathByName } from '../../src/picture.js'
 
 describe('Test function getImagePathByName', () => {
 
-    let images
+    let images;
 
     beforeAll(() => {
         images = [
@@ -16,7 +16,7 @@ describe('Test function getImagePathByName', () => {
     })
     
     test('Function getImagePathByName returns random value of the provided list', () => {
-        const randomValue = getImagePathByName('', images)
+        const randomValue = getImagePathByName('', images);
         expect(images).toContain(randomValue);
     })
 
@@ -30,9 +30,15 @@ describe('Test function getImagePathByName', () => {
     it.each([
         ['path', 'random_image1', 'path/random_image1.jpeg'],
         ['other/path', 'random_image1.jpeg', 'other/path/random_image1.jpeg'],
-        ['path', 'not_exists_image1.jpeg', 'Picture not_exists_image1.jpeg is not found!'],
     ])('Function getImagePathByName returns correct path by picture name', (pathPrefix, imageName, expectedResult) => {
-        expect(getImagePathByName(pathPrefix, images, imageName)).toEqual(expectedResult)
+        expect(getImagePathByName(pathPrefix, images, imageName)).toEqual(expectedResult);
+    })
+
+    it.each([
+        ['path', 'not_exists_image1.jpeg', ''],
+        ['', 'not_exists_image2', ''],
+    ])('Function getImagePathByName returns empty string when imageName is not found', (pathPrefix, imageName, expectedResult) => {
+        expect(getImagePathByName(pathPrefix, images, imageName)).toBe(expectedResult);
     })
 
     it.each([
@@ -40,8 +46,8 @@ describe('Test function getImagePathByName', () => {
         ['', {a: 1, b: '1'}, "Value [object Object] is not a string!"],
         ['1', 333, 'Value 333 is not a string!'],
     ])('Function getImagePathByName throw an error when imageName is not string', (pathPrefix, imageName, expectedResult) => {
-        expect( () => {
+        expect(() => {
             getImagePathByName(pathPrefix, images, imageName);
-        }).toThrow(expectedResult)
+        }).toThrow(expectedResult);
     })
 })

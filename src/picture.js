@@ -21,7 +21,7 @@ function getImagePathByName(prefix, pictures, pictureName) {
         }
     }
 
-    return `Picture ${pictureName} is not found!`
+    return '';
 }
 
 export { getImagePathByName };
