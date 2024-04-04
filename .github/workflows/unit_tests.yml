@@ -16,5 +16,5 @@ jobs:
         with:
           node-version: "20.x" 
       - run: npm install
-      - run: npm unit-test
+      - run: npm run unit-test
             
