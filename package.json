@@ -6,9 +6,10 @@
   "type": "module",
   "scripts": {
     "start": "node index.js",
+    "build": "docker run --name nodejs-image-demo -p 3001:3001 -d nodejs-image-demo",
     "test": "node --experimental-vm-modules ./node_modules/.bin/jest",
-    "unit-test": "node --experimental-vm-modules ./node_modules/.bin/jest tests/unit",
-    "api-test": "node --experimental-vm-modules ./node_modules/.bin/jest tests/api",
+    "unit-tests": "node --experimental-vm-modules ./node_modules/.bin/jest tests/unit",
+    "api-tests": "node --experimental-vm-modules ./node_modules/.bin/jest tests/api",
     "coverage": "node --experimental-vm-modules ./node_modules/.bin/jest --collect-coverage"
   },
   "keywords": [],
