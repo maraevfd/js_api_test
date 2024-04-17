@@ -1,31 +1,28 @@
-import express from 'express'
+import express, { Express, Request, Response } from "express";
 import fs from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-import { getImagePathByName } from './src/picture.js'
+import { getImagePathByName } from "./src/picture";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const PATH_TO_IMAGES = './images';
-const PICTURES = fs.readdirSync(PATH_TO_IMAGES);
+const PATH_TO_IMAGES: string = './images';
+const PICTURES: string[] = fs.readdirSync(PATH_TO_IMAGES);
 
-const app = express();
+const app: Express = express();
+const appPort: number = 3001;
 
 app.use(express.json());
 
-app.get('/random_picture', (req, res) => {
+app.get('/random_picture', (req: Request, res: Response) => {
     console.log(__dirname);
-    res.sendFile(getImagePathByName(PATH_TO_IMAGES, PICTURES), { root: __dirname });
+    res.sendFile(getImagePathByName(PATH_TO_IMAGES, PICTURES, undefined), { root: __dirname });
 })
 
-app.post('/picture', (req, res) => {
+app.post('/picture', (req: Request, res: Response) => {
     const requestedPicture = req.body.picture;
 
     if (!requestedPicture) {
         return res.sendStatus(400);
     }
 
-    let pathToImage;
+    let pathToImage: string = '';
     try{
         pathToImage = `${__dirname}/${getImagePathByName(PATH_TO_IMAGES, PICTURES, requestedPicture)}`;
     } catch (error) {
@@ -37,7 +34,7 @@ app.post('/picture', (req, res) => {
         res.sendStatus(400);
     }
 
-    fs.access(pathToImage, fs.constants.F_OK, (err) => {
+    fs.access(pathToImage, fs.constants.F_OK, (err: Error | null) => {
         if (err) {
             res.sendStatus(404);
         } else {
@@ -47,4 +44,4 @@ app.post('/picture', (req, res) => {
 
 })
 
-app.listen(3001, () => console.log('API Server is up and running...'));
+app.listen(appPort, () => console.log('API Server is up and running...'));
